@@ -1,0 +1,11 @@
+.input-upload-style {
+  opacity: 0;
+}
+.preview-image {
+  margin-top: 10px;
+  width: 99%;
+  height: 250px;
+  border-radius: 5px;
+  border: 2px dashed rgb(200, 95, 95);
+  cursor: pointer;
+}

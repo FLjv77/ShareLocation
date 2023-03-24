@@ -1,0 +1,77 @@
+.content {
+  padding-top: 50px;
+  margin: auto;
+  width: 55%;
+}
+.form-fram {
+  border-radius: 10px 10px 7px 7px;
+  position: relative;
+  margin-top: 50px;
+  border: 2px solid rgb(200, 95, 95);
+  align-items: center;
+  width: 98%;
+  padding-top: 70px;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 15px;
+}
+
+.form-fram-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-radius: 6px 6px 0 0;
+  height: 40px;
+  background-color: rgb(200, 95, 95);
+}
+
+.my-row {
+  display: flex;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.w-25 {
+  width: 25%;
+}
+
+.w-75 {
+  width: 75%;
+}
+
+.input {
+  width: 98.5%;
+  height: 30px;
+}
+
+.save-button {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  width: 130px;
+  background-color: rgb(200, 95, 95);
+}
+
+.cancel-button {
+  margin-right: 15px;
+  cursor: pointer;
+  margin-top: 15px;
+  border: none;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 130px;
+  background-color: rgb(106, 106, 106);
+  color: white;
+}
+
+.d-rtl {
+  direction: rtl;
+}
