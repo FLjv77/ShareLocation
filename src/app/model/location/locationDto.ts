@@ -1,22 +1,27 @@
 export class AddressDto {
   name: string;
-  lon: number;
-  lat: number;
   logoUrl: string;
   type: LocationType;
+  location: LocationPoint;
 
-  constructor(
-    name: string,
-    lon: number,
-    lat: number,
-    logoUrl: string,
-    type: LocationType
-  ) {
-    this.name = name;
+  public setName(name: string) { this.name = name;}
+  public setLocation(location: LocationPoint) {
+    this.location = location;
+  }
+  public setType(type: LocationType) {
+    this.type = type;
+  }
+  public setLogo(url: string) {
+    this.logoUrl = url;
+  }
+}
+
+export class LocationPoint {
+  lon: number;
+  lat: number;
+  constructor(lon: number, lat: number) {
     this.lon = lon;
     this.lat = lat;
-    this.logoUrl = logoUrl;
-    this.type = type;
   }
 }
 

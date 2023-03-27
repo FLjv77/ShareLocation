@@ -7,7 +7,7 @@
   border-radius: 10px 10px 7px 7px;
   position: relative;
   margin-top: 50px;
-  border: 2px solid rgb(200, 95, 95);
+  border: 2px solid rgb(64, 123, 249);
   align-items: center;
   width: 98%;
   padding-top: 70px;
@@ -21,9 +21,14 @@
   top: 0;
   left: 0;
   right: 0;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  font-size: large;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 6px 6px 0 0;
-  height: 40px;
-  background-color: rgb(200, 95, 95);
+  background-color: rgb(64, 123, 249);
 }
 
 .my-row {
@@ -40,36 +45,39 @@
   width: 75%;
 }
 
-.input {
-  width: 98.5%;
-  height: 30px;
+.btn {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 130px;
+}
+
+.edit-button {
+  background-color: rgb(232, 144, 37);
+}
+
+
+.edit-button-disable {
+  background-color: rgb(238, 182, 119);
 }
 
 .save-button {
-  margin-top: 15px;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  color: white;
-  border: none;
-  width: 130px;
-  background-color: rgb(200, 95, 95);
+  background-color: rgb(64, 123, 249);
+}
+
+
+.save-button-disable {
+  background-color: rgb(132, 169, 249);
 }
 
 .cancel-button {
   margin-right: 15px;
-  cursor: pointer;
-  margin-top: 15px;
-  border: none;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px;
-  border-radius: 5px;
-  width: 130px;
   background-color: rgb(106, 106, 106);
-  color: white;
 }
 
 .d-rtl {

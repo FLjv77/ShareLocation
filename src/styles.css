@@ -4,6 +4,9 @@
   src: url("./assets/font/CalibriRegular.ttf");
 }
 
+body {
+  background-color: rgb(233, 239, 246);
+}
 * {
   font-family: calibri;
 }

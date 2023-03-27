@@ -1,6 +1,6 @@
-<select id="type" name="type" class="select">
-  <option value="Busines">Busines</option>
-  <option value="Home">Home</option>
-  <option value="Sport">Sport</option>
-  <option value="cultural">cultural</option>
+<select [value]="type" id="type" (change)="setType()" name="type" class="select">
+  <option [value]="0">Busines</option>
+  <option [value]="1">Home</option>
+  <option [value]="2">Sport</option>
+  <option [value]="3">cultural</option>
 </select>

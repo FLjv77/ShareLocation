@@ -1,5 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as L from 'leaflet';
+import { AddressDto, LocationPoint } from 'src/app/model/location/locationDto';
+import { ControlDataService } from 'src/app/service/controlDataService/control-data.service';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -23,53 +25,65 @@ L.Marker.prototype.options.icon = iconDefault;
 })
 export class LocationOnMapComponent implements OnInit, AfterViewInit {
 
+  @Output() location = new EventEmitter<LocationPoint>();
+
   private map: any;
   private selectedX: number;
   private selectedY: number;
   private marker: any;
-  private initMap(): void {
-    this.map = L.map('map', {
-      center: [ 39.8282, -98.5795 ],
-      zoom: 3
-    });
 
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    tiles.addTo(this.map);
-
-    this.map.on("click", (e: any) => {
-      if(this.marker) this.map.removeLayer(this.marker);
-      this.selectedX = e.latlng.lat;
-      this.selectedY = e.latlng.lng;
-      this.marker = L.marker([this.selectedX, this.selectedY]);
-      this.marker.addTo(this.map);
-      //this.marker.bindTooltip('tooltipTxt', {direction: 'bottom', offset: [15, 25], permanent: true});
-
-      this.marker.bindTooltip("<div style='background:white; padding:1px 3px 1px 3px'><b>" + 'area.toFixed(1)' + "</b></div>",
-        {
-            direction: 'right',
-            permanent: false,
-            sticky: true,
-            offset: [10, 0],
-            opacity: 0.75,
-            className: 'leaflet-tooltip-own'
-        });
-    });
-
-
-  }
-
-  constructor() { }
+  constructor(private controlDataService: ControlDataService) { }
 
   ngAfterViewInit(): void {
     this.initMap();
   }
 
   ngOnInit(): void {
+    this.subscribeResetForm();
+    this.subscribeChangeAddress();
   }
+
+  private subscribeResetForm() {
+    this.controlDataService.handleResetForm.subscribe((res: boolean) => {
+      if(res) {
+        this.map.removeLayer(this.marker);
+      }
+    });
+  }
+
+  private subscribeChangeAddress() {
+    this.controlDataService.handleSelectedAddressToChange.subscribe((res: AddressDto) => {
+      this.addPointOnMap(res.location.lon, res.location.lat);
+      this.location.emit(new LocationPoint(res.location.lon, res.location.lat));
+    });
+  }
+
+  private addPointOnMap(x: number, y: number) {
+    if(this.marker) this.map.removeLayer(this.marker);
+    this.marker = L.marker([x, y]);
+    this.marker.addTo(this.map);
+  }
+
+  private initMap(): void {
+    this.map = L.map('map', {
+      center: [ 39.8282, -98.5795 ],
+      zoom: 5
+    });
+
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      minZoom: 3,
+    });
+
+    tiles.addTo(this.map);
+
+    this.map.on("click", (e: any) => {
+      this.selectedX = e.latlng.lat;
+      this.selectedY = e.latlng.lng;
+      this.addPointOnMap(this.selectedX, this.selectedY);
+      this.location.emit(new LocationPoint(this.selectedX, this.selectedY));
+    });
+  }
+
 
 }

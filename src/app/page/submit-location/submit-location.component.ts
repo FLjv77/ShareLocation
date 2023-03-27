@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-//import * as fs from 'fs'
+import { AddressDto, LocationPoint } from 'src/app/model/location/locationDto';
+import { LocationType } from '../../model/location/locationDto';
+import { ControlDataService } from 'src/app/service/controlDataService/control-data.service';
 
 @Component({
   selector: 'app-submit-location',
@@ -7,25 +9,75 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./submit-location.component.css']
 })
 export class SubmitLocationComponent implements OnInit {
-  constructor() { }
+  private address: AddressDto;
+  public showEditButton: boolean = false;
+  private selectedAddressToEdit: AddressDto;
+  private selectedAddressIndexToEdit: number;
+  constructor(private controlDataService: ControlDataService) { }
 
   ngOnInit(): void {
+    this.address = new AddressDto();
+    this.subscribeChangeAddress();
   }
 
-  public writeFile(){
-	// Requiring fs module in which
-	// writeFile function is defined.
+  private subscribeChangeAddress() {
+    this.controlDataService.handleSelectedAddressToChange.subscribe((res: AddressDto) => {
+      if(res) {
+        this.selectedAddressToEdit = res;
+        this.showEditButton = true;
+      }
+    });
 
-	// Data which will write in a file.
-	let data = "Learning how to write in a file."
-	const fs = require('fs')
+    this.controlDataService.handleSelectedAddressIndexToChange.subscribe((res: number) => {
+      this.selectedAddressIndexToEdit = res;
+    });
+  }
 
-	// Write data in 'Output.txt' .
-	fs.writeFile('Output.txt', data, (err: any) => {
+  public setLocationName(value: string) {
+    this.address.setName(value);
+  }
 
-		// In case of a error throw err.
-		if (err) throw err;
-	})
+  public setLocationPoint(location: LocationPoint) {
+    this.address.setLocation(location);
+  }
 
+  public setLocationType(type: LocationType) {
+    this.address.setType(type);
+  }
+
+  public setLocationLogo(url: string) {
+    this.address.setLogo(url);
+  }
+
+  public checkAbleButton(): boolean {
+    return ((this.address.location == null) || (this.address.logoUrl == null) || (this.address.name == null) || (this.address.type == null));
+  }
+
+  public submitData() {
+    this.controlDataService.saveDataInLocalStorage(this.address);
+    this.address = new AddressDto();
+    this.controlDataService.resetForm();
+  }
+
+
+  public EditData() {
+    this.controlDataService.editDataInLocalStorage(this.selectedAddressIndexToEdit, this.address);
+  }
+
+  public clearForm() {
+    this.controlDataService.resetForm();
+  }
+
+  public checkActiveEditButton() {
+    let res = true;
+    if(this.selectedAddressToEdit) {
+      if(this.selectedAddressToEdit.name != this.address.name ||
+        this.selectedAddressToEdit.logoUrl != this.address.logoUrl ||
+        this.selectedAddressToEdit.location.lat != this.address.location.lat ||
+        this.selectedAddressToEdit.location.lon != this.address.location.lon ||
+        this.selectedAddressToEdit.type != this.address.type)
+        res = false;
+    }
+    return res;
   }
 }

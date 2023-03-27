@@ -1,12 +1,14 @@
 <div class="content">
   <div class="form-fram">
-    <div class="form-fram-header"></div>
+    <div class="form-fram-header">
+      Address Form
+    </div>
     <div class="my-row">
     <div class="w-25">
       <label for="LocationName">Location Name</label>
     </div>
     <div class="w-75">
-      <input class="input" type="text" id="LocationName" name="lname" placeholder="Your location name..">
+      <app-location-name (locationName)="setLocationName($event)"></app-location-name>
     </div>
   </div>
 
@@ -15,7 +17,7 @@
       <label for="LocationName">Location on map</label>
     </div>
     <div class="w-75">
-      <app-location-on-map></app-location-on-map>
+      <app-location-on-map (location)="setLocationPoint($event)"></app-location-on-map>
     </div>
   </div>
 
@@ -24,7 +26,7 @@
       <label for="LocationName">Location type</label>
     </div>
     <div class="w-75">
-      <app-location-type></app-location-type>
+      <app-location-type (locationType)="setLocationType($event)"></app-location-type>
     </div>
   </div>
 
@@ -33,7 +35,7 @@
       <label for="LocationName">Logo</label>
     </div>
     <div class="w-75">
-      <app-upload-logo></app-upload-logo>
+      <app-upload-logo (locationUrl)="setLocationLogo($event)"></app-upload-logo>
     </div>
   </div>
 
@@ -41,8 +43,9 @@
 </div>
 
   <div class="d-rtl">
-    <button class="save-button">Save</button>
-    <button class="cancel-button" (click)="writeFile()">Cancel</button>
+    <button *ngIf="showEditButton" [disabled]="checkActiveEditButton()" (click)="EditData()" class="btn {{checkActiveEditButton() ? 'edit-button-disable' : 'edit-button'}}">Edit</button>
+    <button *ngIf="!showEditButton" [disabled]="checkAbleButton()" (click)="submitData()" class="btn {{checkAbleButton() ? 'save-button-disable' : 'save-button'}}">Save</button>
+    <button (click)="clearForm()" class="cancel-button btn">Cancel</button>
   </div>
 
 
