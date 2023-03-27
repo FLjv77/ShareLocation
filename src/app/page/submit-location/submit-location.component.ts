@@ -62,6 +62,7 @@ export class SubmitLocationComponent implements OnInit {
 
   public EditData() {
     this.controlDataService.editDataInLocalStorage(this.selectedAddressIndexToEdit, this.address);
+    this.controlDataService.resetForm();
   }
 
   public clearForm() {
